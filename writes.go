@@ -63,13 +63,17 @@ func (db *CouchDB) PutAttachment(docid string, docrev string, attachment io.Read
 }
 
 func (db *CouchDB) PutDocument(doc interface{}, docid string) (*CouchSuccess, error) {
+	return db.PutDocumentWithQueryString(doc, docid, "")
+}
+
+func (db *CouchDB) PutDocumentWithQueryString(doc interface{}, docid, queryString string) (*CouchSuccess, error) {
 	var s CouchSuccess
 	callWriteHook(doc)
 	r, errCh := jsonifyDoc(doc)
 	if docid == "" {
 		return nil, MissingDocumentIDError
 	}
-	req, err := db.createRequest("PUT", escape_docid(docid), "", r)
+	req, err := db.createRequest("PUT", escape_docid(docid), queryString, r)
 	if err != nil {
 		return nil, err
 	}
@@ -85,10 +89,14 @@ func (db *CouchDB) PutDocument(doc interface{}, docid string) (*CouchSuccess, er
 }
 
 func (db *CouchDB) PostDocument(doc interface{}) (*CouchSuccess, error) {
+	return db.PostDocumentWithQueryString(doc, "")
+}
+
+func (db *CouchDB) PostDocumentWithQueryString(doc interface{}, queryString string) (*CouchSuccess, error) {
 	var s CouchSuccess
 	callWriteHook(doc)
 	r, errCh := jsonifyDoc(doc)
-	req, err := db.createRequest("POST", "", "", r)
+	req, err := db.createRequest("POST", "", queryString, r)
 	if err != nil {
 		return nil, err
 	}
