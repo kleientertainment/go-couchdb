@@ -50,6 +50,7 @@ func couchDo(req *http.Request, response interface{}) (int, error) {
 	}
 	if response != nil {
 		j := json.NewDecoder(r.Body)
+		j.DisallowUnknownFields()
 		err = j.Decode(response)
 		if err != nil {
 			return r.StatusCode, err
