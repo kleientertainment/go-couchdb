@@ -75,6 +75,7 @@ func (db *CouchDB) ContinuousChanges(args ChangesArgs) (<-chan *DocRev, <-chan e
 		return nil, e
 	}
 	j := json.NewDecoder(r.Body)
+	j.DisallowUnknownFields()
 	go func() {
 		defer close(c)
 		defer r.Body.Close()
