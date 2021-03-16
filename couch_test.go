@@ -27,7 +27,7 @@ var (
 	test_attachment = "test attachment data"
 )
 
-func TestMain(t *testing.T) {
+func Test_all(t *testing.T) {
 	var doc testdoc
 	var change *DocRev
 	var ok bool
