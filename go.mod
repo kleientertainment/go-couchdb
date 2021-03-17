@@ -1,4 +1,4 @@
-module github.com/kleientertainment/go-couchdb
+module pkg.klei.ca/go-couchdb
 
 go 1.16
 
